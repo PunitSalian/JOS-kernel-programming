@@ -3,20 +3,20 @@
 #include <inc/stdio.h>
 #include <inc/string.h>
 #include <inc/assert.h>
-
+#include <inc/elf.h>
 #include <kern/monitor.h>
 #include <kern/console.h>
-
+#define ELFHDR		((struct Elf *) 0x10000)
 // Test the stack backtrace function (lab 1 only)
 void
 test_backtrace(int x)
 {
-	cprintf("entering test_backtrace %d\n", x);
+	cprintf("entering test_backtrace %d\n",x);
 	if (x > 0)
 		test_backtrace(x-1);
 	else
 		mon_backtrace(0, 0, 0);
-	cprintf("leaving test_backtrace %d\n", x);
+	cprintf("leaving test_backtrace %d\n",x);
 }
 
 void
@@ -34,7 +34,7 @@ i386_init(void)
 	cons_init();
 
 	cprintf("6828 decimal is %o octal!\n", 6828);
-
+	cprintf("%d \n",ELFHDR->e_phnum);
 	// Test the stack backtrace function (lab 1 only)
 	test_backtrace(5);
 
