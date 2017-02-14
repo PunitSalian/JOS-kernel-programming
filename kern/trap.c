@@ -9,6 +9,38 @@
 #include <kern/env.h>
 #include <kern/syscall.h>
 
+
+
+
+
+#define DPLKERN 0
+#define DPLUSR 3
+void divide_zero();
+void brkpoint();
+void no_seg();
+void debug();
+void nmi();
+void oflow();
+void bound();
+void illop();
+void device();
+void dblflt();
+void tss();   
+void stack(); 
+void gpflt(); 
+void pgflt(); 
+void fperr(); 
+void align(); 
+void mchk();  
+void simderr();
+
+void syscalls();
+
+
+
+
+
+
 static struct Taskstate ts;
 
 /* For debugging, so print_trapframe can distinguish between printing
@@ -65,12 +97,29 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
-	
-	
-		int i = 0;
-	for ( ; i < 32 ; i++) {
-		SETGATE(idt[i], 0, GD_KT, trap_handlers[i], 0);
-	}
+	SETGATE(idt[T_DIVIDE],0,GD_KT,divide_zero,DPLKERN);    //CSS=kernel text
+    SETGATE(idt[T_BRKPT],0,GD_KT,brkpoint,DPLUSR);
+    SETGATE(idt[T_SEGNP],0,GD_KT,no_seg,DPLKERN);
+    SETGATE(idt[T_DEBUG],0,GD_KT,debug,DPLKERN);
+    SETGATE(idt[T_NMI],0,GD_KT,nmi,DPLKERN);
+    SETGATE(idt[T_OFLOW],0,GD_KT,oflow,DPLKERN);
+    SETGATE(idt[T_BOUND],0,GD_KT,bound,DPLKERN);
+    SETGATE(idt[T_ILLOP],0,GD_KT,illop,DPLKERN);
+    SETGATE(idt[T_DEVICE],0,GD_KT,device,DPLKERN);
+    SETGATE(idt[T_DBLFLT],0,GD_KT,dblflt,DPLKERN);
+    SETGATE(idt[T_TSS], 0, GD_KT, tss, DPLKERN);
+    SETGATE(idt[T_STACK], 0, GD_KT, stack, DPLKERN);
+    SETGATE(idt[T_GPFLT], 0, GD_KT, gpflt, DPLKERN);
+    SETGATE(idt[T_PGFLT], 0, GD_KT, pgflt, DPLKERN);
+    SETGATE(idt[T_FPERR], 0, GD_KT, fperr, DPLKERN);
+    SETGATE(idt[T_ALIGN], 0, GD_KT, align, DPLKERN);
+    SETGATE(idt[T_MCHK], 0, GD_KT, mchk, DPLKERN);
+    SETGATE(idt[T_SIMDERR], 0, GD_KT, simderr, DPLKERN);
+
+
+    SETGATE(idt[T_SYSCALL], 0, GD_KT, syscalls, DPLUSR);
+
+
 
 	// Per-CPU setup 
 	trap_init_percpu();

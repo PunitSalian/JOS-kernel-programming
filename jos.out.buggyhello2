@@ -1,9 +1,9 @@
 + ld obj/kern/kernel
 + mk obj/kern/kernel.img
 
-(process:15938): GLib-WARNING **: /build/glib2.0-meArNm/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
+(process:28398): GLib-WARNING **: /build/glib2.0-meArNm/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
 
-(process:15940): GLib-WARNING **: /build/glib2.0-meArNm/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
+(process:28400): GLib-WARNING **: /build/glib2.0-meArNm/glib2.0-2.46.2/./glib/gmem.c:482: custom memory allocation vtable not supported
 6828 decimal is XXX octal!
 Physical memory: 131072K available, base = 640K, extended = 130432K
 check_page_alloc() succeeded!
@@ -27,9 +27,9 @@ TRAP frame at 0xf01be000
   eax  0x00000000
   es   0x----0023
   ds   0x----0023
-  trap 0x0000000d General Protection
-  err  0x00000182
-  eip  0x008000ad
+  trap 0x00000030 System call
+  err  0x00000000
+  eip  0x008000af
   cs   0x----001b
   flag 0x00000086
   esp  0xeebfdfa4
@@ -38,4 +38,4 @@ TRAP frame at 0xf01be000
 Destroyed the only environment - nothing more to do!
 Welcome to the JOS kernel monitor!
 Type 'help' for a list of commands.
-qemu: terminating on signal 15 from pid 15842
+qemu: terminating on signal 15 from pid 28302
