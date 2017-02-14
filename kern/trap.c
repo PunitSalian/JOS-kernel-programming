@@ -16,7 +16,7 @@ static struct Taskstate ts;
  * additional information in the latter case.
  */
 static struct Trapframe *last_tf;
-
+extern uint32_t trap_handlers[];
 /* Interrupt descriptor table.  (Must be built at run time because
  * shifted function addresses can't be represented in relocation records.)
  */
@@ -65,6 +65,12 @@ trap_init(void)
 	extern struct Segdesc gdt[];
 
 	// LAB 3: Your code here.
+	
+	
+		int i = 0;
+	for ( ; i < 32 ; i++) {
+		SETGATE(idt[i], 0, GD_KT, trap_handlers[i], 0);
+	}
 
 	// Per-CPU setup 
 	trap_init_percpu();
@@ -143,7 +149,8 @@ trap_dispatch(struct Trapframe *tf)
 {
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
-
+	if(tf->tf_trapno==14)
+        page_fault_handler(tf);
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
@@ -202,6 +209,8 @@ page_fault_handler(struct Trapframe *tf)
 	fault_va = rcr2();
 
 	// Handle kernel-mode page faults.
+	if((tf->tf_cs & 3)==0)
+	    panic("page fault kernel mode");
 
 	// LAB 3: Your code here.
 
