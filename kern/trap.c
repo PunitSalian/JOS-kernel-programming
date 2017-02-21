@@ -196,10 +196,33 @@ print_regs(struct PushRegs *regs)
 static void
 trap_dispatch(struct Trapframe *tf)
 {
+	int rval=0;
+		//cprintf("error interruot %x\n", tf->tf_err);
 	// Handle processor exceptions.
 	// LAB 3: Your code here.
 	if(tf->tf_trapno==14)
+       {
         page_fault_handler(tf);
+        return;
+	}
+	
+	if(tf->tf_trapno==3)
+	{
+	monitor(tf);
+	return;	
+		
+	}
+	
+	if(tf->tf_trapno==T_SYSCALL)
+	{
+	rval= syscall(tf->tf_regs.reg_eax,tf->tf_regs.reg_edx,tf->tf_regs.reg_ecx,tf->tf_regs.reg_ebx,tf->tf_regs.reg_edi,tf->tf_regs.reg_esi);
+	tf->tf_regs.reg_eax = rval;
+	
+	return;
+	}
+
+        
+        
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)

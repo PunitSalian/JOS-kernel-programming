@@ -114,7 +114,7 @@ envid2env(envid_t envid, struct Env **env_store, bool checkperm)
 void
 env_init(void)
 {
-	cprintf("eNV INIT BEGIN \n");
+
 	// Set up envs array
 	// LAB 3: Your code here.
 	// Set up envs array
@@ -130,7 +130,7 @@ env_init(void)
 	// Per-CPU part of the initialization
 	env_init_percpu();
 	
-	cprintf("eNV INIT End \n");
+	
 }
 
 // Load GDT and segment descriptors.
@@ -390,7 +390,7 @@ load_icode(struct Env *e, uint8_t *binary)
 	eph = ph + ELFHDR->e_phnum;
 	 
 	e->env_tf.tf_eip = ELFHDR->e_entry;
-	cprintf("begin copy  prog seg \n");
+
 	
 	
 	
@@ -567,7 +567,6 @@ env_run(struct Env *e)
 		if (curenv && curenv->env_status == ENV_RUNNING)
 			
 			curenv->env_status = ENV_RUNNABLE;
-
 		curenv = e;
 	
 		curenv->env_status = ENV_RUNNING;
@@ -577,9 +576,9 @@ env_run(struct Env *e)
 
 	
 
-	cprintf("after lcr3\n");  //debug
+	
 	env_pop_tf(&(curenv->env_tf));
-	cprintf("after env_pop_tf\n"); //debug
+
 
 
 
