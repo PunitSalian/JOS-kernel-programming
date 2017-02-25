@@ -110,16 +110,16 @@ f0100074:	e8 b9 0f 00 00       	call   f0101032 <mem_init>
 f0100079:	e8 ae 28 00 00       	call   f010292c <env_init>
 	trap_init();
 f010007e:	e8 03 2f 00 00       	call   f0102f86 <trap_init>
-
 #if defined(TEST)
 	// Don't touch -- used by grading script!
 	ENV_CREATE(TEST, ENV_TYPE_USER);
-f0100083:	83 c4 08             	add    $0x8,%esp
-f0100086:	6a 00                	push   $0x0
-f0100088:	68 e6 1b 13 f0       	push   $0xf0131be6
-f010008d:	e8 5b 2a 00 00       	call   f0102aed <env_create>
+#else
 	// Touch all you want.
 	ENV_CREATE(user_hello, ENV_TYPE_USER);
+f0100083:	83 c4 08             	add    $0x8,%esp
+f0100086:	6a 00                	push   $0x0
+f0100088:	68 56 b3 11 f0       	push   $0xf011b356
+f010008d:	e8 5b 2a 00 00       	call   f0102aed <env_create>
 #endif // TEST*
 
 	// We only have one user environment for now, so just run it.
@@ -1184,11 +1184,11 @@ read_ebp(void)
 	uint32_t ebp;
 	asm volatile("movl %%ebp,%0" : "=r" (ebp));
 f0100747:	89 eb                	mov    %ebp,%ebx
-
-	struct Eipdebuginfo info;
 	while(pointer)
 	{
 		cprintf("ebp %08x eip %08x args %08x %08x %08x %08x %08x\n",pointer, pointer[1], pointer[2], pointer[3], pointer[4], pointer[5], pointer[6]);
+	    //cprintf("ebp %08x eip %08x args %08x %08x  %08x \n",pointer, &pointer[1], &pointer[2], &pointer[3], pointer[4]);
+
 	    debuginfo_eip(pointer[1],&info);
 f0100749:	8d 75 e0             	lea    -0x20(%ebp),%esi
 
@@ -1209,6 +1209,8 @@ f010075d:	ff 73 04             	pushl  0x4(%ebx)
 f0100760:	53                   	push   %ebx
 f0100761:	68 18 4c 10 f0       	push   $0xf0104c18
 f0100766:	e8 aa 27 00 00       	call   f0102f15 <cprintf>
+	    //cprintf("ebp %08x eip %08x args %08x %08x  %08x \n",pointer, &pointer[1], &pointer[2], &pointer[3], pointer[4]);
+
 	    debuginfo_eip(pointer[1],&info);
 f010076b:	83 c4 18             	add    $0x18,%esp
 f010076e:	56                   	push   %esi
@@ -1225,6 +1227,8 @@ f0100787:	ff 75 e4             	pushl  -0x1c(%ebp)
 f010078a:	ff 75 e0             	pushl  -0x20(%ebp)
 f010078d:	68 c0 4a 10 f0       	push   $0xf0104ac0
 f0100792:	e8 7e 27 00 00       	call   f0102f15 <cprintf>
+	    
+	    //cprintf("\nebp[0] = %x\n",pointer[0]);
 	    pointer=(uint32_t *)pointer[0];
 f0100797:	8b 1b                	mov    (%ebx),%ebx
 f0100799:	83 c4 20             	add    $0x20,%esp
@@ -1236,8 +1240,8 @@ f0100799:	83 c4 20             	add    $0x20,%esp
 	while(pointer)
 f010079c:	85 db                	test   %ebx,%ebx
 f010079e:	75 ae                	jne    f010074e <mon_backtrace+0xf>
-	    debuginfo_eip(pointer[1],&info);
-	    cprintf("%s:%d: %.*s+%d\n",info.eip_file,info.eip_line,info.eip_fn_namelen,info.eip_fn_name,(pointer[1]-info.eip_fn_addr));
+	    
+	    //cprintf("\nebp[0] = %x\n",pointer[0]);
 	    pointer=(uint32_t *)pointer[0];
 	}
 return 0;
