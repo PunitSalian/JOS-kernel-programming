@@ -42,7 +42,7 @@ i386_init(void)
 	trap_init();
 
 	// Lab 4 multiprocessor initialization functions
-	mp_init();
+	 mp_init();
 	lapic_init();
 
 	// Lab 4 multitasking initialization functions
@@ -50,7 +50,7 @@ i386_init(void)
 
 	// Acquire the big kernel lock before waking up APs
 	// Your code here:
-lock_kernel() ;
+    lock_kernel() ;
 	// Starting non-boot CPUs
 	boot_aps();
 	
