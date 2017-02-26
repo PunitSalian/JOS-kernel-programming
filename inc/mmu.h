@@ -158,7 +158,7 @@ struct Segdesc {
 	unsigned sd_dpl : 2;        // Descriptor Privilege Level
 	unsigned sd_p : 1;          // Present
 	unsigned sd_lim_19_16 : 4;  // High bits of segment limit
-	unsigneFd sd_avl : 1;        // Unused (available for software use)
+	unsigned sd_avl : 1;        // Unused (available for software use)
 	unsigned sd_rsv1 : 1;       // Reserved
 	unsigned sd_db : 1;         // 0 = 16-bit segment, 1 = 32-bit segment
 	unsigned sd_g : 1;          // Granularity: limit scaled by 4K when set

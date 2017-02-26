@@ -252,7 +252,7 @@ trap_dispatch(struct Trapframe *tf)
 	return;
 	}
 
-<<<<<<< HEAD
+
 	// Handle spurious interrupts
 	// The hardware sometimes raises these because of noise on the
 	// IRQ line or other reasons. We don't care.
@@ -266,10 +266,9 @@ trap_dispatch(struct Trapframe *tf)
 	// interrupt using lapic_eoi() before calling the scheduler!
 	// LAB 4: Your code here.
 
-=======
+
         
-        
->>>>>>> lab3
+
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
