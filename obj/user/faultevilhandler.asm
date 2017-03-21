@@ -234,9 +234,9 @@ sys_env_destroy(envid_t envid)
   80011c:	83 ec 0c             	sub    $0xc,%esp
   80011f:	50                   	push   %eax
   800120:	6a 03                	push   $0x3
-  800122:	68 de 0f 80 00       	push   $0x800fde
+  800122:	68 ea 0f 80 00       	push   $0x800fea
   800127:	6a 23                	push   $0x23
-  800129:	68 fb 0f 80 00       	push   $0x800ffb
+  800129:	68 07 10 80 00       	push   $0x801007
   80012e:	e8 f5 01 00 00       	call   800328 <_panic>
 
 int
@@ -357,9 +357,9 @@ sys_page_alloc(envid_t envid, void *va, int perm)
   80019d:	83 ec 0c             	sub    $0xc,%esp
   8001a0:	50                   	push   %eax
   8001a1:	6a 04                	push   $0x4
-  8001a3:	68 de 0f 80 00       	push   $0x800fde
+  8001a3:	68 ea 0f 80 00       	push   $0x800fea
   8001a8:	6a 23                	push   $0x23
-  8001aa:	68 fb 0f 80 00       	push   $0x800ffb
+  8001aa:	68 07 10 80 00       	push   $0x801007
   8001af:	e8 74 01 00 00       	call   800328 <_panic>
 
 int
@@ -410,9 +410,9 @@ sys_page_map(envid_t srcenv, void *srcva, envid_t dstenv, void *dstva, int perm)
   8001df:	83 ec 0c             	sub    $0xc,%esp
   8001e2:	50                   	push   %eax
   8001e3:	6a 05                	push   $0x5
-  8001e5:	68 de 0f 80 00       	push   $0x800fde
+  8001e5:	68 ea 0f 80 00       	push   $0x800fea
   8001ea:	6a 23                	push   $0x23
-  8001ec:	68 fb 0f 80 00       	push   $0x800ffb
+  8001ec:	68 07 10 80 00       	push   $0x801007
   8001f1:	e8 32 01 00 00       	call   800328 <_panic>
 
 int
@@ -463,9 +463,9 @@ sys_page_unmap(envid_t envid, void *va)
   800221:	83 ec 0c             	sub    $0xc,%esp
   800224:	50                   	push   %eax
   800225:	6a 06                	push   $0x6
-  800227:	68 de 0f 80 00       	push   $0x800fde
+  800227:	68 ea 0f 80 00       	push   $0x800fea
   80022c:	6a 23                	push   $0x23
-  80022e:	68 fb 0f 80 00       	push   $0x800ffb
+  80022e:	68 07 10 80 00       	push   $0x801007
   800233:	e8 f0 00 00 00       	call   800328 <_panic>
 
 int
@@ -518,9 +518,9 @@ sys_env_set_status(envid_t envid, int status)
   800263:	83 ec 0c             	sub    $0xc,%esp
   800266:	50                   	push   %eax
   800267:	6a 08                	push   $0x8
-  800269:	68 de 0f 80 00       	push   $0x800fde
+  800269:	68 ea 0f 80 00       	push   $0x800fea
   80026e:	6a 23                	push   $0x23
-  800270:	68 fb 0f 80 00       	push   $0x800ffb
+  800270:	68 07 10 80 00       	push   $0x801007
   800275:	e8 ae 00 00 00       	call   800328 <_panic>
 
 int
@@ -571,9 +571,9 @@ sys_env_set_pgfault_upcall(envid_t envid, void *upcall)
   8002a5:	83 ec 0c             	sub    $0xc,%esp
   8002a8:	50                   	push   %eax
   8002a9:	6a 09                	push   $0x9
-  8002ab:	68 de 0f 80 00       	push   $0x800fde
+  8002ab:	68 ea 0f 80 00       	push   $0x800fea
   8002b0:	6a 23                	push   $0x23
-  8002b2:	68 fb 0f 80 00       	push   $0x800ffb
+  8002b2:	68 07 10 80 00       	push   $0x801007
   8002b7:	e8 6c 00 00 00       	call   800328 <_panic>
 
 int
@@ -659,9 +659,9 @@ sys_ipc_recv(void *dstva)
   800309:	83 ec 0c             	sub    $0xc,%esp
   80030c:	50                   	push   %eax
   80030d:	6a 0c                	push   $0xc
-  80030f:	68 de 0f 80 00       	push   $0x800fde
+  80030f:	68 ea 0f 80 00       	push   $0x800fea
   800314:	6a 23                	push   $0x23
-  800316:	68 fb 0f 80 00       	push   $0x800ffb
+  800316:	68 07 10 80 00       	push   $0x801007
   80031b:	e8 08 00 00 00       	call   800328 <_panic>
 
 int
@@ -701,7 +701,7 @@ _panic(const char *file, int line, const char *fmt, ...)
   800341:	ff 75 08             	pushl  0x8(%ebp)
   800344:	56                   	push   %esi
   800345:	50                   	push   %eax
-  800346:	68 0c 10 80 00       	push   $0x80100c
+  800346:	68 18 10 80 00       	push   $0x801018
   80034b:	e8 b1 00 00 00       	call   800401 <cprintf>
 		sys_getenvid(), binaryname, file, line);
 	vcprintf(fmt, ap);
@@ -710,7 +710,7 @@ _panic(const char *file, int line, const char *fmt, ...)
   800354:	ff 75 10             	pushl  0x10(%ebp)
   800357:	e8 54 00 00 00       	call   8003b0 <vcprintf>
 	cprintf("\n");
-  80035c:	c7 04 24 30 10 80 00 	movl   $0x801030,(%esp)
+  80035c:	c7 04 24 3c 10 80 00 	movl   $0x80103c,(%esp)
   800363:	e8 99 00 00 00       	call   800401 <cprintf>
   800368:	83 c4 10             	add    $0x10,%esp
 
@@ -819,12 +819,12 @@ cprintf(const char *fmt, ...)
   800414:	c3                   	ret    
 
 00800415 <printnum>:
-/*
- * Print a number (base <= 16) in reverse order,
  * using specified putch function and associated pointer putdat.
  */
 static void
 printnum(void (*putch)(int, void*), void *putdat,
+	 unsigned long long num, unsigned base, int width, int padc)
+{
   800415:	55                   	push   %ebp
   800416:	89 e5                	mov    %esp,%ebp
   800418:	57                   	push   %edi
@@ -837,8 +837,8 @@ printnum(void (*putch)(int, void*), void *putdat,
   800425:	8b 55 0c             	mov    0xc(%ebp),%edx
   800428:	89 45 d8             	mov    %eax,-0x28(%ebp)
   80042b:	89 55 dc             	mov    %edx,-0x24(%ebp)
-	 unsigned long long num, unsigned base, int width, int padc)
-{
+	// first recursively print all preceding (more significant) digits
+	if (num >= base) {
   80042e:	8b 4d 10             	mov    0x10(%ebp),%ecx
   800431:	bb 00 00 00 00       	mov    $0x0,%ebx
   800436:	89 4d e0             	mov    %ecx,-0x20(%ebp)
@@ -847,7 +847,7 @@ printnum(void (*putch)(int, void*), void *putdat,
   80043e:	72 05                	jb     800445 <printnum+0x30>
   800440:	39 45 10             	cmp    %eax,0x10(%ebp)
   800443:	77 45                	ja     80048a <printnum+0x75>
-	// first recursively print all preceding (more significant) digits
+		printnum(putch, putdat, num / base, base, width - 1, padc);
   800445:	83 ec 0c             	sub    $0xc,%esp
   800448:	ff 75 18             	pushl  0x18(%ebp)
   80044b:	8b 45 14             	mov    0x14(%ebp),%eax
@@ -868,10 +868,10 @@ printnum(void (*putch)(int, void*), void *putdat,
   800472:	e8 9e ff ff ff       	call   800415 <printnum>
   800477:	83 c4 20             	add    $0x20,%esp
   80047a:	eb 18                	jmp    800494 <printnum+0x7f>
-	if (num >= base) {
-		printnum(putch, putdat, num / base, base, width - 1, padc);
 	} else {
 		// print any needed pad characters before first digit
+		while (--width > 0)
+			putch(padc, putdat);
   80047c:	83 ec 08             	sub    $0x8,%esp
   80047f:	56                   	push   %esi
   800480:	ff 75 18             	pushl  0x18(%ebp)
@@ -879,20 +879,20 @@ printnum(void (*putch)(int, void*), void *putdat,
   800485:	83 c4 10             	add    $0x10,%esp
   800488:	eb 03                	jmp    80048d <printnum+0x78>
   80048a:	8b 5d 14             	mov    0x14(%ebp),%ebx
-	 unsigned long long num, unsigned base, int width, int padc)
-{
 	// first recursively print all preceding (more significant) digits
 	if (num >= base) {
 		printnum(putch, putdat, num / base, base, width - 1, padc);
 	} else {
+		// print any needed pad characters before first digit
+		while (--width > 0)
   80048d:	83 eb 01             	sub    $0x1,%ebx
   800490:	85 db                	test   %ebx,%ebx
   800492:	7f e8                	jg     80047c <printnum+0x67>
-		// print any needed pad characters before first digit
-		while (--width > 0)
 			putch(padc, putdat);
 	}
 
+	// then print this (the least significant) digit
+	putch("0123456789abcdef"[num % base], putdat);
   800494:	83 ec 08             	sub    $0x8,%esp
   800497:	56                   	push   %esi
   800498:	83 ec 04             	sub    $0x4,%esp
@@ -902,10 +902,10 @@ printnum(void (*putch)(int, void*), void *putdat,
   8004a4:	ff 75 d8             	pushl  -0x28(%ebp)
   8004a7:	e8 d4 09 00 00       	call   800e80 <__umoddi3>
   8004ac:	83 c4 14             	add    $0x14,%esp
-  8004af:	0f be 80 32 10 80 00 	movsbl 0x801032(%eax),%eax
+  8004af:	0f be 80 3e 10 80 00 	movsbl 0x80103e(%eax),%eax
   8004b6:	50                   	push   %eax
   8004b7:	ff d7                	call   *%edi
-	// then print this (the least significant) digit
+}
   8004b9:	83 c4 10             	add    $0x10,%esp
   8004bc:	8d 65 f4             	lea    -0xc(%ebp),%esp
   8004bf:	5b                   	pop    %ebx
@@ -915,63 +915,63 @@ printnum(void (*putch)(int, void*), void *putdat,
   8004c3:	c3                   	ret    
 
 008004c4 <sprintputch>:
-	char *buf;
-	char *ebuf;
 	int cnt;
 };
 
 static void
+sprintputch(int ch, struct sprintbuf *b)
+{
   8004c4:	55                   	push   %ebp
   8004c5:	89 e5                	mov    %esp,%ebp
   8004c7:	8b 45 0c             	mov    0xc(%ebp),%eax
-sprintputch(int ch, struct sprintbuf *b)
+	b->cnt++;
   8004ca:	83 40 08 01          	addl   $0x1,0x8(%eax)
-{
+	if (b->buf < b->ebuf)
   8004ce:	8b 10                	mov    (%eax),%edx
   8004d0:	3b 50 04             	cmp    0x4(%eax),%edx
   8004d3:	73 0a                	jae    8004df <sprintputch+0x1b>
-	b->cnt++;
+		*b->buf++ = ch;
   8004d5:	8d 4a 01             	lea    0x1(%edx),%ecx
   8004d8:	89 08                	mov    %ecx,(%eax)
   8004da:	8b 45 08             	mov    0x8(%ebp),%eax
   8004dd:	88 02                	mov    %al,(%edx)
-	if (b->buf < b->ebuf)
+}
   8004df:	5d                   	pop    %ebp
   8004e0:	c3                   	ret    
 
 008004e1 <printfmt>:
-			break;
-		}
 	}
 }
 
 void
+printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...)
+{
   8004e1:	55                   	push   %ebp
   8004e2:	89 e5                	mov    %esp,%ebp
   8004e4:	83 ec 08             	sub    $0x8,%esp
-printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...)
-{
 	va_list ap;
-  8004e7:	8d 45 14             	lea    0x14(%ebp),%eax
 
+	va_start(ap, fmt);
+  8004e7:	8d 45 14             	lea    0x14(%ebp),%eax
+	vprintfmt(putch, putdat, fmt, ap);
   8004ea:	50                   	push   %eax
   8004eb:	ff 75 10             	pushl  0x10(%ebp)
   8004ee:	ff 75 0c             	pushl  0xc(%ebp)
   8004f1:	ff 75 08             	pushl  0x8(%ebp)
   8004f4:	e8 05 00 00 00       	call   8004fe <vprintfmt>
-	va_start(ap, fmt);
-	vprintfmt(putch, putdat, fmt, ap);
+	va_end(ap);
+}
   8004f9:	83 c4 10             	add    $0x10,%esp
   8004fc:	c9                   	leave  
   8004fd:	c3                   	ret    
 
 008004fe <vprintfmt>:
-
-
 // Main function to format and print a string.
 void printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...);
 
 void
+vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
+{
   8004fe:	55                   	push   %ebp
   8004ff:	89 e5                	mov    %esp,%ebp
   800501:	57                   	push   %edi
@@ -982,27 +982,27 @@ void
   80050a:	8b 5d 0c             	mov    0xc(%ebp),%ebx
   80050d:	8b 7d 10             	mov    0x10(%ebp),%edi
   800510:	eb 12                	jmp    800524 <vprintfmt+0x26>
-	register int ch, err;
-	unsigned long long num;
 	int base, lflag, width, precision, altflag;
 	char padc;
 
 	while (1) {
-  800512:	85 c0                	test   %eax,%eax
-  800514:	0f 84 42 04 00 00    	je     80095c <vprintfmt+0x45e>
 		while ((ch = *(unsigned char *) fmt++) != '%') {
 			if (ch == '\0')
+  800512:	85 c0                	test   %eax,%eax
+  800514:	0f 84 42 04 00 00    	je     80095c <vprintfmt+0x45e>
+				return;
+			putch(ch, putdat);
   80051a:	83 ec 08             	sub    $0x8,%esp
   80051d:	53                   	push   %ebx
   80051e:	50                   	push   %eax
   80051f:	ff d6                	call   *%esi
   800521:	83 c4 10             	add    $0x10,%esp
-	register const char *p;
-	register int ch, err;
 	unsigned long long num;
 	int base, lflag, width, precision, altflag;
 	char padc;
 
+	while (1) {
+		while ((ch = *(unsigned char *) fmt++) != '%') {
   800524:	83 c7 01             	add    $0x1,%edi
   800527:	0f b6 47 ff          	movzbl -0x1(%edi),%eax
   80052b:	83 f8 25             	cmp    $0x25,%eax
@@ -1013,24 +1013,24 @@ void
   800542:	c7 45 e0 ff ff ff ff 	movl   $0xffffffff,-0x20(%ebp)
   800549:	b9 00 00 00 00       	mov    $0x0,%ecx
   80054e:	eb 07                	jmp    800557 <vprintfmt+0x59>
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
-  800550:	8b 7d e4             	mov    -0x1c(%ebp),%edi
 	reswitch:
 		switch (ch = *(unsigned char *) fmt++) {
+  800550:	8b 7d e4             	mov    -0x1c(%ebp),%edi
 
 		// flag to pad on the right
+		case '-':
+			padc = '-';
   800553:	c6 45 d4 2d          	movb   $0x2d,-0x2c(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   800557:	8d 47 01             	lea    0x1(%edi),%eax
   80055a:	89 45 e4             	mov    %eax,-0x1c(%ebp)
   80055d:	0f b6 07             	movzbl (%edi),%eax
@@ -1039,254 +1039,254 @@ void
   800566:	3c 55                	cmp    $0x55,%al
   800568:	0f 87 d3 03 00 00    	ja     800941 <vprintfmt+0x443>
   80056e:	0f b6 c0             	movzbl %al,%eax
-  800571:	ff 24 85 c0 10 80 00 	jmp    *0x8010c0(,%eax,4)
+  800571:	ff 24 85 00 11 80 00 	jmp    *0x801100(,%eax,4)
   800578:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-		// flag to pad on the right
-		case '-':
 			padc = '-';
 			goto reswitch;
 
 		// flag to pad with 0's instead of spaces
+		case '0':
+			padc = '0';
   80057b:	c6 45 d4 30          	movb   $0x30,-0x2c(%ebp)
   80057f:	eb d6                	jmp    800557 <vprintfmt+0x59>
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   800581:	8b 7d e4             	mov    -0x1c(%ebp),%edi
   800584:	b8 00 00 00 00       	mov    $0x0,%eax
   800589:	89 4d e4             	mov    %ecx,-0x1c(%ebp)
-		case '4':
-		case '5':
 		case '6':
 		case '7':
 		case '8':
 		case '9':
+			for (precision = 0; ; ++fmt) {
+				precision = precision * 10 + ch - '0';
   80058c:	8d 04 80             	lea    (%eax,%eax,4),%eax
   80058f:	8d 44 42 d0          	lea    -0x30(%edx,%eax,2),%eax
-			for (precision = 0; ; ++fmt) {
+				ch = *fmt;
   800593:	0f be 17             	movsbl (%edi),%edx
-				precision = precision * 10 + ch - '0';
+				if (ch < '0' || ch > '9')
   800596:	8d 4a d0             	lea    -0x30(%edx),%ecx
   800599:	83 f9 09             	cmp    $0x9,%ecx
   80059c:	77 3f                	ja     8005dd <vprintfmt+0xdf>
-		case '3':
-		case '4':
 		case '5':
 		case '6':
 		case '7':
 		case '8':
-  80059e:	83 c7 01             	add    $0x1,%edi
 		case '9':
 			for (precision = 0; ; ++fmt) {
+  80059e:	83 c7 01             	add    $0x1,%edi
 				precision = precision * 10 + ch - '0';
 				ch = *fmt;
 				if (ch < '0' || ch > '9')
-  8005a1:	eb e9                	jmp    80058c <vprintfmt+0x8e>
 					break;
 			}
+  8005a1:	eb e9                	jmp    80058c <vprintfmt+0x8e>
 			goto process_precision;
 
+		case '*':
+			precision = va_arg(ap, int);
   8005a3:	8b 45 14             	mov    0x14(%ebp),%eax
   8005a6:	8b 00                	mov    (%eax),%eax
   8005a8:	89 45 d0             	mov    %eax,-0x30(%ebp)
   8005ab:	8b 45 14             	mov    0x14(%ebp),%eax
   8005ae:	8d 40 04             	lea    0x4(%eax),%eax
   8005b1:	89 45 14             	mov    %eax,0x14(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   8005b4:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-				if (ch < '0' || ch > '9')
-					break;
 			}
 			goto process_precision;
 
 		case '*':
+			precision = va_arg(ap, int);
+			goto process_precision;
   8005b7:	eb 2a                	jmp    8005e3 <vprintfmt+0xe5>
   8005b9:	8b 45 e0             	mov    -0x20(%ebp),%eax
   8005bc:	85 c0                	test   %eax,%eax
   8005be:	ba 00 00 00 00       	mov    $0x0,%edx
   8005c3:	0f 49 d0             	cmovns %eax,%edx
   8005c6:	89 55 e0             	mov    %edx,-0x20(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   8005c9:	8b 7d e4             	mov    -0x1c(%ebp),%edi
   8005cc:	eb 89                	jmp    800557 <vprintfmt+0x59>
   8005ce:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-
-		case '.':
 			if (width < 0)
 				width = 0;
 			goto reswitch;
 
-  8005d1:	c7 45 d8 01 00 00 00 	movl   $0x1,-0x28(%ebp)
 		case '#':
+			altflag = 1;
+  8005d1:	c7 45 d8 01 00 00 00 	movl   $0x1,-0x28(%ebp)
+			goto reswitch;
   8005d8:	e9 7a ff ff ff       	jmp    800557 <vprintfmt+0x59>
   8005dd:	8b 4d e4             	mov    -0x1c(%ebp),%ecx
   8005e0:	89 45 d0             	mov    %eax,-0x30(%ebp)
-			altflag = 1;
-			goto reswitch;
 
+		process_precision:
+			if (width < 0)
   8005e3:	83 7d e0 00          	cmpl   $0x0,-0x20(%ebp)
   8005e7:	0f 89 6a ff ff ff    	jns    800557 <vprintfmt+0x59>
-		process_precision:
+				width = precision, precision = -1;
   8005ed:	8b 45 d0             	mov    -0x30(%ebp),%eax
   8005f0:	89 45 e0             	mov    %eax,-0x20(%ebp)
   8005f3:	c7 45 d0 ff ff ff ff 	movl   $0xffffffff,-0x30(%ebp)
   8005fa:	e9 58 ff ff ff       	jmp    800557 <vprintfmt+0x59>
-			if (width < 0)
-				width = precision, precision = -1;
-			goto reswitch;
-
-		// long flag (doubled for long long)
-  8005ff:	83 c1 01             	add    $0x1,%ecx
-		// Process a %-escape sequence
-		padc = ' ';
-		width = -1;
-		precision = -1;
-		lflag = 0;
-		altflag = 0;
-  800602:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-			if (width < 0)
-				width = precision, precision = -1;
 			goto reswitch;
 
 		// long flag (doubled for long long)
 		case 'l':
-  800605:	e9 4d ff ff ff       	jmp    800557 <vprintfmt+0x59>
 			lflag++;
+  8005ff:	83 c1 01             	add    $0x1,%ecx
+		width = -1;
+		precision = -1;
+		lflag = 0;
+		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
+  800602:	8b 7d e4             	mov    -0x1c(%ebp),%edi
 			goto reswitch;
 
+		// long flag (doubled for long long)
+		case 'l':
+			lflag++;
+			goto reswitch;
+  800605:	e9 4d ff ff ff       	jmp    800557 <vprintfmt+0x59>
+
 		// character
+		case 'c':
+			putch(va_arg(ap, int), putdat);
   80060a:	8b 45 14             	mov    0x14(%ebp),%eax
   80060d:	8d 78 04             	lea    0x4(%eax),%edi
   800610:	83 ec 08             	sub    $0x8,%esp
   800613:	53                   	push   %ebx
   800614:	ff 30                	pushl  (%eax)
   800616:	ff d6                	call   *%esi
-		case 'c':
+			break;
   800618:	83 c4 10             	add    $0x10,%esp
-		// long flag (doubled for long long)
-		case 'l':
 			lflag++;
 			goto reswitch;
 
 		// character
+		case 'c':
+			putch(va_arg(ap, int), putdat);
   80061b:	89 7d 14             	mov    %edi,0x14(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   80061e:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-		case 'l':
-			lflag++;
 			goto reswitch;
 
 		// character
 		case 'c':
-  800621:	e9 fe fe ff ff       	jmp    800524 <vprintfmt+0x26>
 			putch(va_arg(ap, int), putdat);
 			break;
+  800621:	e9 fe fe ff ff       	jmp    800524 <vprintfmt+0x26>
 
 		// error message
+		case 'e':
+			err = va_arg(ap, int);
   800626:	8b 45 14             	mov    0x14(%ebp),%eax
   800629:	8d 78 04             	lea    0x4(%eax),%edi
   80062c:	8b 00                	mov    (%eax),%eax
   80062e:	99                   	cltd   
   80062f:	31 d0                	xor    %edx,%eax
   800631:	29 d0                	sub    %edx,%eax
-		case 'e':
-			err = va_arg(ap, int);
 			if (err < 0)
-  800633:	83 f8 06             	cmp    $0x6,%eax
+				err = -err;
+			if (err >= MAXERROR || (p = error_string[err]) == NULL)
+  800633:	83 f8 08             	cmp    $0x8,%eax
   800636:	7f 0b                	jg     800643 <vprintfmt+0x145>
-  800638:	8b 14 85 18 12 80 00 	mov    0x801218(,%eax,4),%edx
+  800638:	8b 14 85 60 12 80 00 	mov    0x801260(,%eax,4),%edx
   80063f:	85 d2                	test   %edx,%edx
   800641:	75 1b                	jne    80065e <vprintfmt+0x160>
-				err = -err;
+				printfmt(putch, putdat, "error %d", err);
   800643:	50                   	push   %eax
-  800644:	68 4a 10 80 00       	push   $0x80104a
+  800644:	68 56 10 80 00       	push   $0x801056
   800649:	53                   	push   %ebx
   80064a:	56                   	push   %esi
   80064b:	e8 91 fe ff ff       	call   8004e1 <printfmt>
   800650:	83 c4 10             	add    $0x10,%esp
-		// character
-		case 'c':
 			putch(va_arg(ap, int), putdat);
 			break;
-
-		// error message
-  800653:	89 7d 14             	mov    %edi,0x14(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
-		width = -1;
-		precision = -1;
-		lflag = 0;
-		altflag = 0;
-  800656:	8b 7d e4             	mov    -0x1c(%ebp),%edi
 
 		// error message
 		case 'e':
 			err = va_arg(ap, int);
-			if (err < 0)
-				err = -err;
-  800659:	e9 c6 fe ff ff       	jmp    800524 <vprintfmt+0x26>
-			if (err >= MAXERROR || (p = error_string[err]) == NULL)
-				printfmt(putch, putdat, "error %d", err);
-  80065e:	52                   	push   %edx
-  80065f:	68 53 10 80 00       	push   $0x801053
-  800664:	53                   	push   %ebx
-  800665:	56                   	push   %esi
-  800666:	e8 76 fe ff ff       	call   8004e1 <printfmt>
-  80066b:	83 c4 10             	add    $0x10,%esp
-		// character
-		case 'c':
-			putch(va_arg(ap, int), putdat);
-			break;
-
-		// error message
-  80066e:	89 7d 14             	mov    %edi,0x14(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
+  800653:	89 7d 14             	mov    %edi,0x14(%ebp)
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
+  800656:	8b 7d e4             	mov    -0x1c(%ebp),%edi
+		case 'e':
+			err = va_arg(ap, int);
+			if (err < 0)
+				err = -err;
+			if (err >= MAXERROR || (p = error_string[err]) == NULL)
+				printfmt(putch, putdat, "error %d", err);
+  800659:	e9 c6 fe ff ff       	jmp    800524 <vprintfmt+0x26>
+			else
+				printfmt(putch, putdat, "%s", p);
+  80065e:	52                   	push   %edx
+  80065f:	68 5f 10 80 00       	push   $0x80105f
+  800664:	53                   	push   %ebx
+  800665:	56                   	push   %esi
+  800666:	e8 76 fe ff ff       	call   8004e1 <printfmt>
+  80066b:	83 c4 10             	add    $0x10,%esp
+			putch(va_arg(ap, int), putdat);
+			break;
+
+		// error message
+		case 'e':
+			err = va_arg(ap, int);
+  80066e:	89 7d 14             	mov    %edi,0x14(%ebp)
+		width = -1;
+		precision = -1;
+		lflag = 0;
+		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   800671:	8b 7d e4             	mov    -0x1c(%ebp),%edi
   800674:	e9 ab fe ff ff       	jmp    800524 <vprintfmt+0x26>
-				printfmt(putch, putdat, "error %d", err);
-			else
 				printfmt(putch, putdat, "%s", p);
 			break;
 
 		// string
+		case 's':
+			if ((p = va_arg(ap, char *)) == NULL)
   800679:	8b 45 14             	mov    0x14(%ebp),%eax
   80067c:	83 c0 04             	add    $0x4,%eax
   80067f:	89 45 cc             	mov    %eax,-0x34(%ebp)
   800682:	8b 45 14             	mov    0x14(%ebp),%eax
   800685:	8b 38                	mov    (%eax),%edi
-		case 's':
+				p = "(null)";
   800687:	85 ff                	test   %edi,%edi
-  800689:	b8 43 10 80 00       	mov    $0x801043,%eax
+  800689:	b8 4f 10 80 00       	mov    $0x80104f,%eax
   80068e:	0f 44 f8             	cmove  %eax,%edi
-			if ((p = va_arg(ap, char *)) == NULL)
+			if (width > 0 && padc != '-')
   800691:	83 7d e0 00          	cmpl   $0x0,-0x20(%ebp)
   800695:	0f 8e 94 00 00 00    	jle    80072f <vprintfmt+0x231>
   80069b:	80 7d d4 2d          	cmpb   $0x2d,-0x2c(%ebp)
   80069f:	0f 84 98 00 00 00    	je     80073d <vprintfmt+0x23f>
-				p = "(null)";
+				for (width -= strnlen(p, precision); width > 0; width--)
   8006a5:	83 ec 08             	sub    $0x8,%esp
   8006a8:	ff 75 d0             	pushl  -0x30(%ebp)
   8006ab:	57                   	push   %edi
@@ -1295,29 +1295,29 @@ void
   8006b4:	29 c1                	sub    %eax,%ecx
   8006b6:	89 4d c8             	mov    %ecx,-0x38(%ebp)
   8006b9:	83 c4 10             	add    $0x10,%esp
-			if (width > 0 && padc != '-')
+					putch(padc, putdat);
   8006bc:	0f be 45 d4          	movsbl -0x2c(%ebp),%eax
   8006c0:	89 45 e0             	mov    %eax,-0x20(%ebp)
   8006c3:	89 7d d4             	mov    %edi,-0x2c(%ebp)
   8006c6:	89 cf                	mov    %ecx,%edi
-			break;
-
 		// string
 		case 's':
 			if ((p = va_arg(ap, char *)) == NULL)
 				p = "(null)";
-  8006c8:	eb 0f                	jmp    8006d9 <vprintfmt+0x1db>
 			if (width > 0 && padc != '-')
+				for (width -= strnlen(p, precision); width > 0; width--)
+  8006c8:	eb 0f                	jmp    8006d9 <vprintfmt+0x1db>
+					putch(padc, putdat);
   8006ca:	83 ec 08             	sub    $0x8,%esp
   8006cd:	53                   	push   %ebx
   8006ce:	ff 75 e0             	pushl  -0x20(%ebp)
   8006d1:	ff d6                	call   *%esi
-			break;
-
 		// string
 		case 's':
 			if ((p = va_arg(ap, char *)) == NULL)
 				p = "(null)";
+			if (width > 0 && padc != '-')
+				for (width -= strnlen(p, precision); width > 0; width--)
   8006d3:	83 ef 01             	sub    $0x1,%edi
   8006d6:	83 c4 10             	add    $0x10,%esp
   8006d9:	85 ff                	test   %edi,%edi
@@ -1333,35 +1333,35 @@ void
   8006f5:	89 5d 0c             	mov    %ebx,0xc(%ebp)
   8006f8:	89 cb                	mov    %ecx,%ebx
   8006fa:	eb 4d                	jmp    800749 <vprintfmt+0x24b>
-			if (width > 0 && padc != '-')
-				for (width -= strnlen(p, precision); width > 0; width--)
 					putch(padc, putdat);
+			for (; (ch = *p++) != '\0' && (precision < 0 || --precision >= 0); width--)
+				if (altflag && (ch < ' ' || ch > '~'))
   8006fc:	83 7d d8 00          	cmpl   $0x0,-0x28(%ebp)
   800700:	74 1b                	je     80071d <vprintfmt+0x21f>
   800702:	0f be c0             	movsbl %al,%eax
   800705:	83 e8 20             	sub    $0x20,%eax
   800708:	83 f8 5e             	cmp    $0x5e,%eax
   80070b:	76 10                	jbe    80071d <vprintfmt+0x21f>
-			for (; (ch = *p++) != '\0' && (precision < 0 || --precision >= 0); width--)
+					putch('?', putdat);
   80070d:	83 ec 08             	sub    $0x8,%esp
   800710:	ff 75 0c             	pushl  0xc(%ebp)
   800713:	6a 3f                	push   $0x3f
   800715:	ff 55 08             	call   *0x8(%ebp)
   800718:	83 c4 10             	add    $0x10,%esp
   80071b:	eb 0d                	jmp    80072a <vprintfmt+0x22c>
-				if (altflag && (ch < ' ' || ch > '~'))
-					putch('?', putdat);
+				else
+					putch(ch, putdat);
   80071d:	83 ec 08             	sub    $0x8,%esp
   800720:	ff 75 0c             	pushl  0xc(%ebp)
   800723:	52                   	push   %edx
   800724:	ff 55 08             	call   *0x8(%ebp)
   800727:	83 c4 10             	add    $0x10,%esp
-		// string
-		case 's':
 			if ((p = va_arg(ap, char *)) == NULL)
 				p = "(null)";
 			if (width > 0 && padc != '-')
 				for (width -= strnlen(p, precision); width > 0; width--)
+					putch(padc, putdat);
+			for (; (ch = *p++) != '\0' && (precision < 0 || --precision >= 0); width--)
   80072a:	83 eb 01             	sub    $0x1,%ebx
   80072d:	eb 1a                	jmp    800749 <vprintfmt+0x24b>
   80072f:	89 75 08             	mov    %esi,0x8(%ebp)
@@ -1386,22 +1386,22 @@ void
   800762:	8b 75 08             	mov    0x8(%ebp),%esi
   800765:	8b 5d 0c             	mov    0xc(%ebp),%ebx
   800768:	eb 18                	jmp    800782 <vprintfmt+0x284>
-					putch(padc, putdat);
+				if (altflag && (ch < ' ' || ch > '~'))
+					putch('?', putdat);
+				else
+					putch(ch, putdat);
+			for (; width > 0; width--)
+				putch(' ', putdat);
+  80076a:	83 ec 08             	sub    $0x8,%esp
+  80076d:	53                   	push   %ebx
+  80076e:	6a 20                	push   $0x20
+  800770:	ff d6                	call   *%esi
 			for (; (ch = *p++) != '\0' && (precision < 0 || --precision >= 0); width--)
 				if (altflag && (ch < ' ' || ch > '~'))
 					putch('?', putdat);
 				else
 					putch(ch, putdat);
-  80076a:	83 ec 08             	sub    $0x8,%esp
-  80076d:	53                   	push   %ebx
-  80076e:	6a 20                	push   $0x20
-  800770:	ff d6                	call   *%esi
-				for (width -= strnlen(p, precision); width > 0; width--)
-					putch(padc, putdat);
-			for (; (ch = *p++) != '\0' && (precision < 0 || --precision >= 0); width--)
-				if (altflag && (ch < ' ' || ch > '~'))
-					putch('?', putdat);
-				else
+			for (; width > 0; width--)
   800772:	83 ef 01             	sub    $0x1,%edi
   800775:	83 c4 10             	add    $0x10,%esp
   800778:	eb 08                	jmp    800782 <vprintfmt+0x284>
@@ -1410,31 +1410,31 @@ void
   80077f:	8b 5d 0c             	mov    0xc(%ebp),%ebx
   800782:	85 ff                	test   %edi,%edi
   800784:	7f e4                	jg     80076a <vprintfmt+0x26c>
-				printfmt(putch, putdat, "error %d", err);
-			else
 				printfmt(putch, putdat, "%s", p);
 			break;
 
 		// string
+		case 's':
+			if ((p = va_arg(ap, char *)) == NULL)
   800786:	8b 45 cc             	mov    -0x34(%ebp),%eax
   800789:	89 45 14             	mov    %eax,0x14(%ebp)
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   80078c:	8b 7d e4             	mov    -0x1c(%ebp),%edi
   80078f:	e9 90 fd ff ff       	jmp    800524 <vprintfmt+0x26>
-}
-
 // Same as getuint but signed - can't use getuint
 // because of sign extension
 static long long
 getint(va_list *ap, int lflag)
+{
+	if (lflag >= 2)
   800794:	83 f9 01             	cmp    $0x1,%ecx
   800797:	7e 19                	jle    8007b2 <vprintfmt+0x2b4>
-{
+		return va_arg(*ap, long long);
   800799:	8b 45 14             	mov    0x14(%ebp),%eax
   80079c:	8b 50 04             	mov    0x4(%eax),%edx
   80079f:	8b 00                	mov    (%eax),%eax
@@ -1444,10 +1444,10 @@ getint(va_list *ap, int lflag)
   8007aa:	8d 40 08             	lea    0x8(%eax),%eax
   8007ad:	89 45 14             	mov    %eax,0x14(%ebp)
   8007b0:	eb 38                	jmp    8007ea <vprintfmt+0x2ec>
-	if (lflag >= 2)
+	else if (lflag)
   8007b2:	85 c9                	test   %ecx,%ecx
   8007b4:	74 1b                	je     8007d1 <vprintfmt+0x2d3>
-		return va_arg(*ap, long long);
+		return va_arg(*ap, long);
   8007b6:	8b 45 14             	mov    0x14(%ebp),%eax
   8007b9:	8b 00                	mov    (%eax),%eax
   8007bb:	89 45 d8             	mov    %eax,-0x28(%ebp)
@@ -1458,8 +1458,8 @@ getint(va_list *ap, int lflag)
   8007c9:	8d 40 04             	lea    0x4(%eax),%eax
   8007cc:	89 45 14             	mov    %eax,0x14(%ebp)
   8007cf:	eb 19                	jmp    8007ea <vprintfmt+0x2ec>
-	else if (lflag)
-		return va_arg(*ap, long);
+	else
+		return va_arg(*ap, int);
   8007d1:	8b 45 14             	mov    0x14(%ebp),%eax
   8007d4:	8b 00                	mov    (%eax),%eax
   8007d6:	89 45 d8             	mov    %eax,-0x28(%ebp)
@@ -1469,118 +1469,118 @@ getint(va_list *ap, int lflag)
   8007e1:	8b 45 14             	mov    0x14(%ebp),%eax
   8007e4:	8d 40 04             	lea    0x4(%eax),%eax
   8007e7:	89 45 14             	mov    %eax,0x14(%ebp)
-					putch(ch, putdat);
-			for (; width > 0; width--)
 				putch(' ', putdat);
 			break;
 
 		// (signed) decimal
-  8007ea:	8b 55 d8             	mov    -0x28(%ebp),%edx
-  8007ed:	8b 4d dc             	mov    -0x24(%ebp),%ecx
 		case 'd':
 			num = getint(&ap, lflag);
+  8007ea:	8b 55 d8             	mov    -0x28(%ebp),%edx
+  8007ed:	8b 4d dc             	mov    -0x24(%ebp),%ecx
 			if ((long long) num < 0) {
 				putch('-', putdat);
 				num = -(long long) num;
+			}
+			base = 10;
   8007f0:	b8 0a 00 00 00       	mov    $0xa,%eax
-			for (; width > 0; width--)
-				putch(' ', putdat);
 			break;
 
 		// (signed) decimal
 		case 'd':
+			num = getint(&ap, lflag);
+			if ((long long) num < 0) {
   8007f5:	83 7d dc 00          	cmpl   $0x0,-0x24(%ebp)
   8007f9:	0f 89 0e 01 00 00    	jns    80090d <vprintfmt+0x40f>
-			num = getint(&ap, lflag);
+				putch('-', putdat);
   8007ff:	83 ec 08             	sub    $0x8,%esp
   800802:	53                   	push   %ebx
   800803:	6a 2d                	push   $0x2d
   800805:	ff d6                	call   *%esi
-			if ((long long) num < 0) {
+				num = -(long long) num;
   800807:	8b 55 d8             	mov    -0x28(%ebp),%edx
   80080a:	8b 4d dc             	mov    -0x24(%ebp),%ecx
   80080d:	f7 da                	neg    %edx
   80080f:	83 d1 00             	adc    $0x0,%ecx
   800812:	f7 d9                	neg    %ecx
   800814:	83 c4 10             	add    $0x10,%esp
-				putch('-', putdat);
-				num = -(long long) num;
+			}
+			base = 10;
   800817:	b8 0a 00 00 00       	mov    $0xa,%eax
   80081c:	e9 ec 00 00 00       	jmp    80090d <vprintfmt+0x40f>
-}
-
 // Get an unsigned int of various possible sizes from a varargs list,
 // depending on the lflag parameter.
 static unsigned long long
 getuint(va_list *ap, int lflag)
+{
+	if (lflag >= 2)
   800821:	83 f9 01             	cmp    $0x1,%ecx
   800824:	7e 18                	jle    80083e <vprintfmt+0x340>
-{
+		return va_arg(*ap, unsigned long long);
   800826:	8b 45 14             	mov    0x14(%ebp),%eax
   800829:	8b 10                	mov    (%eax),%edx
   80082b:	8b 48 04             	mov    0x4(%eax),%ecx
   80082e:	8d 40 08             	lea    0x8(%eax),%eax
   800831:	89 45 14             	mov    %eax,0x14(%ebp)
-			}
-			base = 10;
 			goto number;
 
 		// unsigned decimal
 		case 'u':
+			num = getuint(&ap, lflag);
+			base = 10;
   800834:	b8 0a 00 00 00       	mov    $0xa,%eax
   800839:	e9 cf 00 00 00       	jmp    80090d <vprintfmt+0x40f>
-// Get an unsigned int of various possible sizes from a varargs list,
-// depending on the lflag parameter.
 static unsigned long long
-getuint(va_list *ap, int lflag)
-{
-	if (lflag >= 2)
-  80083e:	85 c9                	test   %ecx,%ecx
-  800840:	74 1a                	je     80085c <vprintfmt+0x35e>
-		return va_arg(*ap, unsigned long long);
-  800842:	8b 45 14             	mov    0x14(%ebp),%eax
-  800845:	8b 10                	mov    (%eax),%edx
-  800847:	b9 00 00 00 00       	mov    $0x0,%ecx
-  80084c:	8d 40 04             	lea    0x4(%eax),%eax
-  80084f:	89 45 14             	mov    %eax,0x14(%ebp)
-			}
-			base = 10;
-			goto number;
-
-		// unsigned decimal
-		case 'u':
-  800852:	b8 0a 00 00 00       	mov    $0xa,%eax
-  800857:	e9 b1 00 00 00       	jmp    80090d <vprintfmt+0x40f>
 getuint(va_list *ap, int lflag)
 {
 	if (lflag >= 2)
 		return va_arg(*ap, unsigned long long);
 	else if (lflag)
+  80083e:	85 c9                	test   %ecx,%ecx
+  800840:	74 1a                	je     80085c <vprintfmt+0x35e>
 		return va_arg(*ap, unsigned long);
+  800842:	8b 45 14             	mov    0x14(%ebp),%eax
+  800845:	8b 10                	mov    (%eax),%edx
+  800847:	b9 00 00 00 00       	mov    $0x0,%ecx
+  80084c:	8d 40 04             	lea    0x4(%eax),%eax
+  80084f:	89 45 14             	mov    %eax,0x14(%ebp)
+			goto number;
+
+		// unsigned decimal
+		case 'u':
+			num = getuint(&ap, lflag);
+			base = 10;
+  800852:	b8 0a 00 00 00       	mov    $0xa,%eax
+  800857:	e9 b1 00 00 00       	jmp    80090d <vprintfmt+0x40f>
+	if (lflag >= 2)
+		return va_arg(*ap, unsigned long long);
+	else if (lflag)
+		return va_arg(*ap, unsigned long);
+	else
+		return va_arg(*ap, unsigned int);
   80085c:	8b 45 14             	mov    0x14(%ebp),%eax
   80085f:	8b 10                	mov    (%eax),%edx
   800861:	b9 00 00 00 00       	mov    $0x0,%ecx
   800866:	8d 40 04             	lea    0x4(%eax),%eax
   800869:	89 45 14             	mov    %eax,0x14(%ebp)
-			}
-			base = 10;
 			goto number;
 
 		// unsigned decimal
 		case 'u':
-  80086c:	b8 0a 00 00 00       	mov    $0xa,%eax
-  800871:	e9 97 00 00 00       	jmp    80090d <vprintfmt+0x40f>
 			num = getuint(&ap, lflag);
 			base = 10;
+  80086c:	b8 0a 00 00 00       	mov    $0xa,%eax
+  800871:	e9 97 00 00 00       	jmp    80090d <vprintfmt+0x40f>
 			goto number;
 
 		// (unsigned) octal
 		case 'o':
+			// Replace this with your code.
+			putch('X', putdat);
   800876:	83 ec 08             	sub    $0x8,%esp
   800879:	53                   	push   %ebx
   80087a:	6a 58                	push   $0x58
   80087c:	ff d6                	call   *%esi
-			// Replace this with your code.
+			putch('X', putdat);
   80087e:	83 c4 08             	add    $0x8,%esp
   800881:	53                   	push   %ebx
   800882:	6a 58                	push   $0x58
@@ -1590,119 +1590,119 @@ getuint(va_list *ap, int lflag)
   800889:	53                   	push   %ebx
   80088a:	6a 58                	push   $0x58
   80088c:	ff d6                	call   *%esi
-			putch('X', putdat);
+			break;
   80088e:	83 c4 10             	add    $0x10,%esp
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   800891:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-
-		// (unsigned) octal
 		case 'o':
 			// Replace this with your code.
 			putch('X', putdat);
 			putch('X', putdat);
-  800894:	e9 8b fc ff ff       	jmp    800524 <vprintfmt+0x26>
 			putch('X', putdat);
 			break;
+  800894:	e9 8b fc ff ff       	jmp    800524 <vprintfmt+0x26>
 
 		// pointer
+		case 'p':
+			putch('0', putdat);
   800899:	83 ec 08             	sub    $0x8,%esp
   80089c:	53                   	push   %ebx
   80089d:	6a 30                	push   $0x30
   80089f:	ff d6                	call   *%esi
-		case 'p':
+			putch('x', putdat);
   8008a1:	83 c4 08             	add    $0x8,%esp
   8008a4:	53                   	push   %ebx
   8008a5:	6a 78                	push   $0x78
   8008a7:	ff d6                	call   *%esi
-			putch('0', putdat);
+			num = (unsigned long long)
   8008a9:	8b 45 14             	mov    0x14(%ebp),%eax
   8008ac:	8b 10                	mov    (%eax),%edx
   8008ae:	b9 00 00 00 00       	mov    $0x0,%ecx
-			putch('x', putdat);
-			num = (unsigned long long)
 				(uintptr_t) va_arg(ap, void *);
+			base = 16;
+			goto number;
   8008b3:	83 c4 10             	add    $0x10,%esp
-			break;
-
 		// pointer
 		case 'p':
 			putch('0', putdat);
 			putch('x', putdat);
+			num = (unsigned long long)
+				(uintptr_t) va_arg(ap, void *);
   8008b6:	8d 40 04             	lea    0x4(%eax),%eax
   8008b9:	89 45 14             	mov    %eax,0x14(%ebp)
-			num = (unsigned long long)
+			base = 16;
   8008bc:	b8 10 00 00 00       	mov    $0x10,%eax
-				(uintptr_t) va_arg(ap, void *);
+			goto number;
   8008c1:	eb 4a                	jmp    80090d <vprintfmt+0x40f>
-}
-
 // Get an unsigned int of various possible sizes from a varargs list,
 // depending on the lflag parameter.
 static unsigned long long
 getuint(va_list *ap, int lflag)
+{
+	if (lflag >= 2)
   8008c3:	83 f9 01             	cmp    $0x1,%ecx
   8008c6:	7e 15                	jle    8008dd <vprintfmt+0x3df>
-{
+		return va_arg(*ap, unsigned long long);
   8008c8:	8b 45 14             	mov    0x14(%ebp),%eax
   8008cb:	8b 10                	mov    (%eax),%edx
   8008cd:	8b 48 04             	mov    0x4(%eax),%ecx
   8008d0:	8d 40 08             	lea    0x8(%eax),%eax
   8008d3:	89 45 14             	mov    %eax,0x14(%ebp)
-				(uintptr_t) va_arg(ap, void *);
-			base = 16;
 			goto number;
 
 		// (unsigned) hexadecimal
 		case 'x':
+			num = getuint(&ap, lflag);
+			base = 16;
   8008d6:	b8 10 00 00 00       	mov    $0x10,%eax
   8008db:	eb 30                	jmp    80090d <vprintfmt+0x40f>
-// Get an unsigned int of various possible sizes from a varargs list,
-// depending on the lflag parameter.
 static unsigned long long
-getuint(va_list *ap, int lflag)
-{
-	if (lflag >= 2)
-  8008dd:	85 c9                	test   %ecx,%ecx
-  8008df:	74 17                	je     8008f8 <vprintfmt+0x3fa>
-		return va_arg(*ap, unsigned long long);
-  8008e1:	8b 45 14             	mov    0x14(%ebp),%eax
-  8008e4:	8b 10                	mov    (%eax),%edx
-  8008e6:	b9 00 00 00 00       	mov    $0x0,%ecx
-  8008eb:	8d 40 04             	lea    0x4(%eax),%eax
-  8008ee:	89 45 14             	mov    %eax,0x14(%ebp)
-				(uintptr_t) va_arg(ap, void *);
-			base = 16;
-			goto number;
-
-		// (unsigned) hexadecimal
-		case 'x':
-  8008f1:	b8 10 00 00 00       	mov    $0x10,%eax
-  8008f6:	eb 15                	jmp    80090d <vprintfmt+0x40f>
 getuint(va_list *ap, int lflag)
 {
 	if (lflag >= 2)
 		return va_arg(*ap, unsigned long long);
 	else if (lflag)
+  8008dd:	85 c9                	test   %ecx,%ecx
+  8008df:	74 17                	je     8008f8 <vprintfmt+0x3fa>
 		return va_arg(*ap, unsigned long);
+  8008e1:	8b 45 14             	mov    0x14(%ebp),%eax
+  8008e4:	8b 10                	mov    (%eax),%edx
+  8008e6:	b9 00 00 00 00       	mov    $0x0,%ecx
+  8008eb:	8d 40 04             	lea    0x4(%eax),%eax
+  8008ee:	89 45 14             	mov    %eax,0x14(%ebp)
+			goto number;
+
+		// (unsigned) hexadecimal
+		case 'x':
+			num = getuint(&ap, lflag);
+			base = 16;
+  8008f1:	b8 10 00 00 00       	mov    $0x10,%eax
+  8008f6:	eb 15                	jmp    80090d <vprintfmt+0x40f>
+	if (lflag >= 2)
+		return va_arg(*ap, unsigned long long);
+	else if (lflag)
+		return va_arg(*ap, unsigned long);
+	else
+		return va_arg(*ap, unsigned int);
   8008f8:	8b 45 14             	mov    0x14(%ebp),%eax
   8008fb:	8b 10                	mov    (%eax),%edx
   8008fd:	b9 00 00 00 00       	mov    $0x0,%ecx
   800902:	8d 40 04             	lea    0x4(%eax),%eax
   800905:	89 45 14             	mov    %eax,0x14(%ebp)
-				(uintptr_t) va_arg(ap, void *);
-			base = 16;
 			goto number;
 
 		// (unsigned) hexadecimal
 		case 'x':
-  800908:	b8 10 00 00 00       	mov    $0x10,%eax
 			num = getuint(&ap, lflag);
 			base = 16;
+  800908:	b8 10 00 00 00       	mov    $0x10,%eax
+		number:
+			printnum(putch, putdat, num, base, width, padc);
   80090d:	83 ec 0c             	sub    $0xc,%esp
   800910:	0f be 7d d4          	movsbl -0x2c(%ebp),%edi
   800914:	57                   	push   %edi
@@ -1713,54 +1713,54 @@ getuint(va_list *ap, int lflag)
   80091b:	89 da                	mov    %ebx,%edx
   80091d:	89 f0                	mov    %esi,%eax
   80091f:	e8 f1 fa ff ff       	call   800415 <printnum>
-		number:
+			break;
   800924:	83 c4 20             	add    $0x20,%esp
   800927:	8b 7d e4             	mov    -0x1c(%ebp),%edi
   80092a:	e9 f5 fb ff ff       	jmp    800524 <vprintfmt+0x26>
-			printnum(putch, putdat, num, base, width, padc);
-			break;
 
 		// escaped '%' character
+		case '%':
+			putch(ch, putdat);
   80092f:	83 ec 08             	sub    $0x8,%esp
   800932:	53                   	push   %ebx
   800933:	52                   	push   %edx
   800934:	ff d6                	call   *%esi
-		case '%':
+			break;
   800936:	83 c4 10             	add    $0x10,%esp
-		// Process a %-escape sequence
-		padc = ' ';
 		width = -1;
 		precision = -1;
 		lflag = 0;
 		altflag = 0;
+	reswitch:
+		switch (ch = *(unsigned char *) fmt++) {
   800939:	8b 7d e4             	mov    -0x1c(%ebp),%edi
-		number:
-			printnum(putch, putdat, num, base, width, padc);
 			break;
 
 		// escaped '%' character
 		case '%':
-  80093c:	e9 e3 fb ff ff       	jmp    800524 <vprintfmt+0x26>
 			putch(ch, putdat);
 			break;
+  80093c:	e9 e3 fb ff ff       	jmp    800524 <vprintfmt+0x26>
 
 		// unrecognized escape sequence - just print it literally
+		default:
+			putch('%', putdat);
   800941:	83 ec 08             	sub    $0x8,%esp
   800944:	53                   	push   %ebx
   800945:	6a 25                	push   $0x25
   800947:	ff d6                	call   *%esi
-		default:
+			for (fmt--; fmt[-1] != '%'; fmt--)
   800949:	83 c4 10             	add    $0x10,%esp
   80094c:	eb 03                	jmp    800951 <vprintfmt+0x453>
   80094e:	83 ef 01             	sub    $0x1,%edi
   800951:	80 7f ff 25          	cmpb   $0x25,-0x1(%edi)
   800955:	75 f7                	jne    80094e <vprintfmt+0x450>
   800957:	e9 c8 fb ff ff       	jmp    800524 <vprintfmt+0x26>
-			putch('%', putdat);
-			for (fmt--; fmt[-1] != '%'; fmt--)
 				/* do nothing */;
 			break;
 		}
+	}
+}
   80095c:	8d 65 f4             	lea    -0xc(%ebp),%esp
   80095f:	5b                   	pop    %ebx
   800960:	5e                   	pop    %esi
@@ -1769,87 +1769,87 @@ getuint(va_list *ap, int lflag)
   800963:	c3                   	ret    
 
 00800964 <vsnprintf>:
-	b->cnt++;
-	if (b->buf < b->ebuf)
 		*b->buf++ = ch;
 }
 
 int
+vsnprintf(char *buf, int n, const char *fmt, va_list ap)
+{
   800964:	55                   	push   %ebp
   800965:	89 e5                	mov    %esp,%ebp
   800967:	83 ec 18             	sub    $0x18,%esp
   80096a:	8b 45 08             	mov    0x8(%ebp),%eax
   80096d:	8b 55 0c             	mov    0xc(%ebp),%edx
-vsnprintf(char *buf, int n, const char *fmt, va_list ap)
+	struct sprintbuf b = {buf, buf+n-1, 0};
   800970:	89 45 ec             	mov    %eax,-0x14(%ebp)
   800973:	8d 4c 10 ff          	lea    -0x1(%eax,%edx,1),%ecx
   800977:	89 4d f0             	mov    %ecx,-0x10(%ebp)
   80097a:	c7 45 f4 00 00 00 00 	movl   $0x0,-0xc(%ebp)
-{
-	struct sprintbuf b = {buf, buf+n-1, 0};
+
+	if (buf == NULL || n < 1)
   800981:	85 c0                	test   %eax,%eax
   800983:	74 26                	je     8009ab <vsnprintf+0x47>
   800985:	85 d2                	test   %edx,%edx
   800987:	7e 22                	jle    8009ab <vsnprintf+0x47>
-
-	if (buf == NULL || n < 1)
 		return -E_INVAL;
 
+	// print the string to the buffer
+	vprintfmt((void*)sprintputch, &b, fmt, ap);
   800989:	ff 75 14             	pushl  0x14(%ebp)
   80098c:	ff 75 10             	pushl  0x10(%ebp)
   80098f:	8d 45 ec             	lea    -0x14(%ebp),%eax
   800992:	50                   	push   %eax
   800993:	68 c4 04 80 00       	push   $0x8004c4
   800998:	e8 61 fb ff ff       	call   8004fe <vprintfmt>
-	// print the string to the buffer
-	vprintfmt((void*)sprintputch, &b, fmt, ap);
 
-  80099d:	8b 45 ec             	mov    -0x14(%ebp),%eax
-  8009a0:	c6 00 00             	movb   $0x0,(%eax)
 	// null terminate the buffer
 	*b.buf = '\0';
+  80099d:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  8009a0:	c6 00 00             	movb   $0x0,(%eax)
+
+	return b.cnt;
   8009a3:	8b 45 f4             	mov    -0xc(%ebp),%eax
   8009a6:	83 c4 10             	add    $0x10,%esp
   8009a9:	eb 05                	jmp    8009b0 <vsnprintf+0x4c>
-
-int
 vsnprintf(char *buf, int n, const char *fmt, va_list ap)
 {
 	struct sprintbuf b = {buf, buf+n-1, 0};
 
+	if (buf == NULL || n < 1)
+		return -E_INVAL;
   8009ab:	b8 fd ff ff ff       	mov    $0xfffffffd,%eax
-	// print the string to the buffer
-	vprintfmt((void*)sprintputch, &b, fmt, ap);
 
 	// null terminate the buffer
 	*b.buf = '\0';
 
+	return b.cnt;
+}
   8009b0:	c9                   	leave  
   8009b1:	c3                   	ret    
 
 008009b2 <snprintf>:
-	return b.cnt;
-}
 
 int
+snprintf(char *buf, int n, const char *fmt, ...)
+{
   8009b2:	55                   	push   %ebp
   8009b3:	89 e5                	mov    %esp,%ebp
   8009b5:	83 ec 08             	sub    $0x8,%esp
-snprintf(char *buf, int n, const char *fmt, ...)
-{
 	va_list ap;
 	int rc;
-  8009b8:	8d 45 14             	lea    0x14(%ebp),%eax
 
+	va_start(ap, fmt);
+  8009b8:	8d 45 14             	lea    0x14(%ebp),%eax
+	rc = vsnprintf(buf, n, fmt, ap);
   8009bb:	50                   	push   %eax
   8009bc:	ff 75 10             	pushl  0x10(%ebp)
   8009bf:	ff 75 0c             	pushl  0xc(%ebp)
   8009c2:	ff 75 08             	pushl  0x8(%ebp)
   8009c5:	e8 9a ff ff ff       	call   800964 <vsnprintf>
-	va_start(ap, fmt);
-	rc = vsnprintf(buf, n, fmt, ap);
 	va_end(ap);
 
+	return rc;
+}
   8009ca:	c9                   	leave  
   8009cb:	c3                   	ret    
 

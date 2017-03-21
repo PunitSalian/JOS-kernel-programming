@@ -1,7 +1,7 @@
 00200010 R __STAB_BEGIN__
-00202c98 R __STAB_END__
-00202c99 R __STABSTR_BEGIN__
-002047d6 R __STABSTR_END__
+00202c80 R __STAB_END__
+00202c81 R __STABSTR_BEGIN__
+0020475c R __STABSTR_END__
 00800020 T _start
 0080002c t args_exist
 00800033 T duppage
@@ -49,7 +49,7 @@
 00800e81 T sys_ipc_recv
 00800ed0 T __udivdi3
 00801000 T __umoddi3
-008013f8 r error_string
+00801440 r error_string
 00802000 D binaryname
 00802004 B thisenv
 00802008 B end

@@ -1,3 +1,4 @@
+
 // implement fork from user space
 
 #include <inc/string.h>
@@ -7,6 +8,9 @@
 // It is one of the bits explicitly allocated to user processes (PTE_AVAIL).
 #define PTE_COW		0x800
 
+
+extern void _pgfault_upcall(void);
+
 //
 // Custom page fault handler - if faulting page is copy-on-write,
 // map in our own private writable copy.
@@ -14,7 +18,7 @@
 static void
 pgfault(struct UTrapframe *utf)
 {
-	void *addr = (void *) utf->utf_fault_va;
+void *addr = (void *) utf->utf_fault_va;
 	uint32_t err = utf->utf_err;
 	int r;
 
@@ -23,6 +27,11 @@ pgfault(struct UTrapframe *utf)
 	// Hint:
 	//   Use the read-only page table mappings at uvpt
 	//   (see <inc/memlayout.h>).
+	if ((err & FEC_WR) == 0)
+		panic("pgfault: faulting address [%08x] not a write\n", addr);
+
+	if (!(uvpt[PGNUM(addr)] & PTE_COW))
+		panic("pgfault: fault was not on a copy-on-write page\n");
 
 	// LAB 4: Your code here.
 
@@ -34,7 +43,18 @@ pgfault(struct UTrapframe *utf)
 
 	// LAB 4: Your code here.
 
-	panic("pgfault not implemented");
+
+	if ((r = sys_page_alloc(0, PFTEMP, PTE_P | PTE_U | PTE_W)) < 0)
+		panic("sys_page_alloc: %e\n", r);
+
+
+	void *src_addr = (void *) ROUNDDOWN(addr, PGSIZE);
+	memmove(PFTEMP, src_addr, PGSIZE);
+
+	
+	if ((r = sys_page_map(0, PFTEMP, 0, src_addr, PTE_P | PTE_U | PTE_W)) < 0)
+	panic("sys_page_map: %e\n", r);
+
 }
 
 //
@@ -52,9 +72,31 @@ static int
 duppage(envid_t envid, unsigned pn)
 {
 	int r;
+	uint32_t perm = PTE_P | PTE_COW;
+	envid_t this_envid = thisenv->env_id;
 
 	// LAB 4: Your code here.
-	panic("duppage not implemented");
+	if (uvpt[pn] & PTE_SHARE) {
+		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), uvpt[pn] & PTE_SYSCALL)) < 0)
+			panic("sys_page_map: %e\n", r);
+	} else if (uvpt[pn] & PTE_COW || uvpt[pn] & PTE_W) {
+		if (uvpt[pn] & PTE_U)
+			perm |= PTE_U;
+
+		// Map page COW, U and P in child
+		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), perm)) < 0)
+			panic("sys_page_map: %e\n", r);
+
+		// Map page COW, U and P in parent
+		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), this_envid, (void *) (pn*PGSIZE), perm)) < 0)
+			panic("sys_page_map: %e\n", r);
+
+	} else { // map pages that are present but not writable or COW with their original permissions
+		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), uvpt[pn] & PTE_SYSCALL)) < 0)
+			panic("sys_page_map: %e\n", r);
+	}
+
+
 	return 0;
 }
 
@@ -78,7 +120,46 @@ envid_t
 fork(void)
 {
 	// LAB 4: Your code here.
-	panic("fork not implemented");
+	int r;
+	envid_t child_envid;
+
+	set_pgfault_handler(pgfault);
+
+	child_envid = sys_exofork();
+	if (child_envid < 0)
+		panic("sys_exofork: %e\n", child_envid);
+	if (child_envid == 0) { // child
+		// Fix thisenv like dumbfork does and return 0
+		thisenv = &envs[ENVX(sys_getenvid())];
+		return 0;
+	}
+
+	// We're in the parent
+
+
+	uint32_t page_num;
+	pte_t *pte;
+	for (page_num = 0; page_num < PGNUM(UTOP - PGSIZE); page_num++) {
+		uint32_t pdx = ROUNDDOWN(page_num, NPDENTRIES) / NPDENTRIES;
+		if ((uvpd[pdx] & PTE_P) == PTE_P &&((uvpt[page_num] & PTE_P) == PTE_P)) {
+				duppage(child_envid, page_num);
+		}
+	}
+
+	// Allocate exception stack space for child
+	
+	if ((r = sys_page_alloc(child_envid, (void *) (UXSTACKTOP - PGSIZE), PTE_P | PTE_U | PTE_W)) < 0)
+		panic("sys_page_alloc: %e\n", r);
+
+	// Set page fault handler for the child
+	if ((r = sys_env_set_pgfault_upcall(child_envid, _pgfault_upcall)) < 0)
+		panic("sys_env_set_pgfault_upcall: %e\n", r);
+
+	// Mark child environment as runnable
+	if ((r = sys_env_set_status(child_envid, ENV_RUNNABLE)) < 0)
+		panic("sys_env_set_status: %e\n", r);
+
+	return child_envid;
 }
 
 // Challenge!
@@ -88,3 +169,6 @@ sfork(void)
 	panic("sfork not implemented");
 	return -E_INVAL;
 }
+
+
+

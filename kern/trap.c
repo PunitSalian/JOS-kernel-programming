@@ -41,7 +41,12 @@ void simderr();
 
 void syscalls();
 
-
+void timer();
+void kbd();
+void serial();
+void spurious();
+void ide();
+void error();
 
 
 
@@ -125,7 +130,12 @@ trap_init(void)
 
 
     SETGATE(idt[T_SYSCALL], 0, GD_KT, syscalls, DPLUSR);
-
+	SETGATE(idt[IRQ_OFFSET + IRQ_TIMER], 0, GD_KT, timer, 0);
+	SETGATE(idt[IRQ_OFFSET + IRQ_KBD], 0, GD_KT, kbd, 0);
+	SETGATE(idt[IRQ_OFFSET + IRQ_SERIAL], 0, GD_KT, serial, 0);
+	SETGATE(idt[IRQ_OFFSET + IRQ_SPURIOUS], 0, GD_KT, spurious, 0);
+	SETGATE(idt[IRQ_OFFSET + IRQ_IDE], 0, GD_KT, ide, 0);
+	SETGATE(idt[IRQ_OFFSET + IRQ_ERROR], 0, GD_KT, error, 0);
 
 
 	// Per-CPU setup 
@@ -133,8 +143,7 @@ trap_init(void)
 }
 
 // Initialize and load the per-CPU TSS and IDT
-void
-trap_init_percpu(void)
+void trap_init_percpu(void)
 {
 	// The example code here sets up the Task State Segment (TSS) and
 	// the TSS descriptor for CPU 0. But it is incorrect if we are
@@ -180,8 +189,7 @@ trap_init_percpu(void)
 	lidt(&idt_pd);
 }
 
-void
-print_trapframe(struct Trapframe *tf)
+void print_trapframe(struct Trapframe *tf)
 {
 	cprintf("TRAP frame at %p from CPU %d\n", tf, cpunum());
 	print_regs(&tf->tf_regs);
@@ -253,32 +261,32 @@ trap_dispatch(struct Trapframe *tf)
 	
 	return;
 	}
-
-
-	// Handle spurious interrupts
-	// The hardware sometimes raises these because of noise on the
-	// IRQ line or other reasons. We don't care.
-	if (tf->tf_trapno == IRQ_OFFSET + IRQ_SPURIOUS) {
-		cprintf("Spurious interrupt on irq 7\n");
-		print_trapframe(tf);
-		return;
-	}
-
+	
 	// Handle clock interrupts. Don't forget to acknowledge the
 	// interrupt using lapic_eoi() before calling the scheduler!
 	// LAB 4: Your code here.
 
+	if(tf->tf_trapno==IRQ_OFFSET + IRQ_TIMER)
+		{
+			lapic_eoi();
+			sched_yield();
 
-        
+	}
 
 	// Unexpected trap: The user process or the kernel has a bug.
-	print_trapframe(tf);
+	//print_trapframe(tf);
+	
+
 	if (tf->tf_cs == GD_KT)
-		panic("unhandled trap in kernel");
+	{
+	
+	panic("unhandled trap in kernel");
+}
 	else {
 		env_destroy(curenv);
 		return;
 	}
+	
 }
 
 void
@@ -350,11 +358,10 @@ page_fault_handler(struct Trapframe *tf)
 	// Read processor's CR2 register to find the faulting address
 	fault_va = rcr2();
 
-	// Handle kernel-mode page faults.
-	if((tf->tf_cs & 3)==0)
-	    panic("page fault kernel mode");
-
-	// LAB 3: Your code here.
+	if ((tf->tf_cs & 0x1) == 0) { // in kernel, panic
+		print_trapframe(tf);
+		panic("page_fault_handler: page fault in kernel, faulting addr %08x", fault_va);
+	}
 
 	// We've already handled kernel-mode exceptions, so if we get here,
 	// the page fault happened in user mode.
@@ -388,11 +395,43 @@ page_fault_handler(struct Trapframe *tf)
 	//   (the 'tf' variable points at 'curenv->env_tf').
 
 	// LAB 4: Your code here.
+	uint32_t stacktop;
+	// is pagefault handler initialized and stacks are in range
+	if (tf->tf_esp > UXSTACKTOP ||curenv->env_pgfault_upcall == NULL ||(tf->tf_esp > USTACKTOP && tf->tf_esp < (UXSTACKTOP - PGSIZE)))
+	{
+		cprintf("[%08x] user fault va %08x ip %08x\n",curenv->env_id, fault_va, tf->tf_eip);
+		print_trapframe(tf);
+		env_destroy(curenv);
+	}
 
-	// Destroy the environment that caused the fault.
-	cprintf("[%08x] user fault va %08x ip %08x\n",
-		curenv->env_id, fault_va, tf->tf_eip);
-	print_trapframe(tf);
-	env_destroy(curenv);
+	// which stack are we in
+	
+	if (tf->tf_esp < USTACKTOP) {
+		// move from user stack to user exception stack
+		stacktop = UXSTACKTOP - sizeof(struct UTrapframe);
+	} else {
+	   //recursive page fault we are in exception stack leave a scracth space of a word
+		stacktop = tf->tf_esp -4 - sizeof(struct UTrapframe);
+	}
+
+//check for permission and is it mapped
+	user_mem_assert(curenv, (void *) stacktop, 5, PTE_W | PTE_U);
+
+
+	struct UTrapframe *u_tf = (struct UTrapframe *) stacktop;
+	
+	u_tf->utf_esp = tf->tf_esp;
+	u_tf->utf_fault_va = fault_va;
+	u_tf->utf_err = tf->tf_err;
+	u_tf->utf_regs = tf->tf_regs;
+	u_tf->utf_eip = tf->tf_eip;
+	u_tf->utf_eflags = tf->tf_eflags;
+	
+
+
+	tf->tf_esp = (uint32_t) stacktop;
+	tf->tf_eip = (uint32_t) curenv->env_pgfault_upcall;
+
+	env_run(curenv);
 }
 
