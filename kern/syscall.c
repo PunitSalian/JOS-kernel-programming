@@ -353,7 +353,7 @@ static int
 sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 {
 	// LAB 4: Your code here.
-// LAB 4: Your code here.
+
 	uint32_t r;
 	struct Env *target_env;
 	bool send_page = false;
@@ -441,7 +441,7 @@ sys_ipc_recv(void *dstva)
 	curenv->env_tf.tf_regs.reg_eax = 0;
 	sys_yield();
 
-return 0;
+
 	return 0;
 }
 

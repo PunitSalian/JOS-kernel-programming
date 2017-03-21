@@ -72,29 +72,16 @@ static int
 duppage(envid_t envid, unsigned pn)
 {
 	int r;
-	uint32_t perm = PTE_P | PTE_COW;
-	envid_t this_envid = thisenv->env_id;
 
 	// LAB 4: Your code here.
-	if (uvpt[pn] & PTE_SHARE) {
-		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), uvpt[pn] & PTE_SYSCALL)) < 0)
-			panic("sys_page_map: %e\n", r);
-	} else if (uvpt[pn] & PTE_COW || uvpt[pn] & PTE_W) {
-		if (uvpt[pn] & PTE_U)
-			perm |= PTE_U;
-
-		// Map page COW, U and P in child
-		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), perm)) < 0)
-			panic("sys_page_map: %e\n", r);
-
-		// Map page COW, U and P in parent
-		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), this_envid, (void *) (pn*PGSIZE), perm)) < 0)
-			panic("sys_page_map: %e\n", r);
-
-	} else { // map pages that are present but not writable or COW with their original permissions
-		if ((r = sys_page_map(this_envid, (void *) (pn*PGSIZE), envid, (void *) (pn*PGSIZE), uvpt[pn] & PTE_SYSCALL)) < 0)
-			panic("sys_page_map: %e\n", r);
-	}
+	int perm = PTE_P|PTE_U;
+	void *va = (void *)(pn << PGSHIFT);
+	if ((uvpt[pn] & PTE_W) || (uvpt[pn] & PTE_COW))
+		perm |= PTE_COW;
+	if ((r = sys_page_map(0, va, envid, va, perm)) < 0)
+		panic("error in duppage(), sys_page_map: %e\n", r);
+	if ((r = sys_page_map(0, va, 0, va, perm)) < 0)
+		panic("error in duppage(), sys_page_map: %e\n", r);
 
 
 	return 0;
@@ -129,7 +116,6 @@ fork(void)
 	if (child_envid < 0)
 		panic("sys_exofork: %e\n", child_envid);
 	if (child_envid == 0) { // child
-		// Fix thisenv like dumbfork does and return 0
 		thisenv = &envs[ENVX(sys_getenvid())];
 		return 0;
 	}
@@ -140,6 +126,8 @@ fork(void)
 	uint32_t page_num;
 	pte_t *pte;
 	for (page_num = 0; page_num < PGNUM(UTOP - PGSIZE); page_num++) {
+		
+		
 		uint32_t pdx = ROUNDDOWN(page_num, NPDENTRIES) / NPDENTRIES;
 		if ((uvpd[pdx] & PTE_P) == PTE_P &&((uvpt[page_num] & PTE_P) == PTE_P)) {
 				duppage(child_envid, page_num);
